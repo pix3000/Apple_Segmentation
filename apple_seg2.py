@@ -1,9 +1,10 @@
 import cv2
 import numpy as np
 
-img_name = "test/A08F.JPG"
+img_path = "test/A08F.JPG"
+img_name = img_path.split("/")[1]
 
-image = cv2.imread(img_name)
+image = cv2.imread(img_path)
 
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 blur = cv2.GaussianBlur(gray, (5, 5), 0)
@@ -25,13 +26,13 @@ mask = cv2.bitwise_or(mask1, mask2)
 # Apply the mask to extract only the red regions
 red_apple = cv2.bitwise_and(image, image, mask=mask)
 
+cv2.imwrite(f"result/{img_name}", red_apple)
+#cv2.waitKey(0)
+#cv2.destroyAllWindows()
+
 # Count the number of objects
 num_labels, labeled_image = cv2.connectedComponents(mask)
 
 # Subtract 1 from the total count to exclude the background label
 num_objects = int(num_labels /45) 
 print(f"{img_name}:", num_objects)
-
-cv2.imwrite(f"result/{img_name}", red_apple)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
