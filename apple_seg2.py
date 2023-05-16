@@ -30,7 +30,7 @@ num_labels, labeled_image = cv2.connectedComponents(mask)
 
 # Subtract 1 from the total count to exclude the background label
 num_objects = int(num_labels /45) 
-print("Number of objects:", num_objects)
+print(f"{img_name}:", num_objects)
 
 cv2.imwrite(f"result/{img_name}", red_apple)
 cv2.waitKey(0)
